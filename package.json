@@ -14,6 +14,7 @@
     "babel-runtime": "^6.9.2",
     "dva": "^1.2.1",
     "lodash": "^4.17.4",
+    "qiniu4js": "^1.0.13",
     "react": "^15.4.0",
     "react-dom": "^15.4.0"
   },
@@ -22,7 +23,7 @@
     "babel-plugin-dva-hmr": "^0.3.2",
     "babel-plugin-import": "^1.2.1",
     "babel-plugin-lodash": "^3.2.11",
-    "babel-plugin-transform-runtime": "^6.9.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "eslint": "^3.12.2",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.2.0",

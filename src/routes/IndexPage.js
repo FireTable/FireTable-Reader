@@ -2,16 +2,17 @@ import React from 'react';
 import { connect } from 'dva';
 import styles from './IndexPage.css';
 import {Button} from 'antd-mobile';
+import MainLayoutComponent from '../components/MainLayout/MainLayout';
+import BookShelfComponent from '../components/BookShelf/BookShelf';
+import InformationComponent from '../components/Information/Information';
 
 function IndexPage() {
   return (
     <div className={styles.normal}>
-      <h1 className={styles.title}>Yay! Welcome to dva!</h1>
-      <div className={styles.welcome} />
-      <ul className={styles.list}>
-        <li>To get started, edit <code>src/index.js</code> and save to reload.</li>
-        <li><a href="https://github.com/dvajs/dva-docs/blob/master/v1/en-us/getting-started.md">Getting Started</a></li>
-      </ul>
+      <MainLayoutComponent>
+        <BookShelfComponent/>
+        <InformationComponent/>
+      </MainLayoutComponent>
     </div>
   );
 }

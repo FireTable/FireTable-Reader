@@ -4,7 +4,8 @@
     "development": {
       "extraBabelPlugins": [
         "dva-hmr",
-        "transform-runtime"
+        "transform-runtime",
+        "lodash"
       ]
     },
     "production": {
