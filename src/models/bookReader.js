@@ -1,9 +1,7 @@
 
 export default {
-  namespace: 'bookShelf',
-  state: {
-    test:'test',
-  },
+  namespace: 'bookReader',
+  state: {},
   reducers: {},
   effects: {},
   subscriptions: {},

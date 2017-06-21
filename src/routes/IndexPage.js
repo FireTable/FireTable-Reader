@@ -6,12 +6,14 @@ import MainLayoutComponent from '../components/MainLayout/MainLayout';
 import BookShelfComponent from '../components/BookShelf/BookShelf';
 import InformationComponent from '../components/Information/Information';
 
-function IndexPage() {
+function IndexPage({userData,bookShelfData,dispatch}) {
+  bookShelfData = {...bookShelfData,dispatch};
+  userData = {...userData,dispatch};
   return (
     <div className={styles.normal}>
       <MainLayoutComponent>
-        <BookShelfComponent/>
-        <InformationComponent/>
+        <BookShelfComponent bookShelfData={bookShelfData}/>
+        <InformationComponent userData={userData}/>
       </MainLayoutComponent>
     </div>
   );
@@ -20,4 +22,14 @@ function IndexPage() {
 IndexPage.propTypes = {
 };
 
-export default connect()(IndexPage);
+function mapStateToProps(state) {
+  const userData = state.user;
+  const bookShelfData=state.bookShelf;
+  return {
+    userData:userData,
+    bookShelfData:bookShelfData,
+
+  };
+}
+
+export default connect(mapStateToProps)(IndexPage);
