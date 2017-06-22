@@ -58,22 +58,25 @@ function BookSearch({bookSearchData}) {
               }
             }
               >
-                <div style={{fontSize:'0.46rem'}}>
+                <span style={{fontSize:'0.36rem'}}>
                 {book.title}
-                <span style={{fontSize:'0.32rem',color:'#666666'}}>
+                </span>
+                <span style={{fontSize:'0.26rem',color:'#666666'}}>
                   &nbsp;#
                 </span>
-                <span style={{fontSize:'0.32rem',color:'#F66666'}}>
+                <span style={{fontSize:'0.26rem',color:'#F66666'}}>
                 {book.cat}
                 </span>
-                <span style={{fontSize:'0.32rem',color:'#99aa66'}}>
+                <span style={{fontSize:'0.26rem',color:'#99aa66'}}>
                 ·{book.hasCp == true? '已完本':'连载中'}
                 </span>
-              </div>
-               <div style={{fontSize:'0.32rem',color:'#666666',marginTop:'0.01rem'}}>
-                    作者:{book.author} &nbsp;&nbsp;&nbsp;字数:{(book.wordCount/10000).toFixed(1)}w &nbsp;&nbsp;&nbsp;{book.latelyFollower}人在追<br/>
+
+               <div style={{fontSize:'0.26rem',color:'#666666',marginTop:'0.01rem'}}>
+                    作者:{book.author} &nbsp;&nbsp;&nbsp;字数:{(book.wordCount/10000).toFixed(1)}w
+                    {/* &nbsp;&nbsp;&nbsp;{book.latelyFollower}人在追<br/> */}
+                    <br/>
                </div>
-               <div style={{fontSize:'0.32rem',color:'#666666',marginTop:'0.01rem'}}>
+               <div style={{fontSize:'0.26rem',color:'#666666',marginTop:'0.01rem'}}>
                     {book.shortIntro}
                </div>
           </Item>

@@ -49,9 +49,9 @@ class MainLayout extends React.Component {
   renderIcon(url) {
     return (
       <div style={{
-        width: '0.6rem',
-        height: '0.6rem',
-        background: `url(${url}) center center /  0.58rem 0.58rem no-repeat` }}
+        width: '0.5rem',
+        height: '0.5rem',
+        background: `url(${url}) center center /  0.48rem 0.48rem no-repeat` }}
       />
     );
   }
@@ -73,8 +73,8 @@ class MainLayout extends React.Component {
       <TabBar.Item
           title="书架"
           key="书架"
-          icon={this.renderIcon('https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg')}
-          selectedIcon={this.renderIcon('https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg')}
+          icon={'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg'}
+          selectedIcon={'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg'}
           // 判断如果是该tab返回ture
           selected={this.state.selectedTab === 'leftTab'}
           onPress={() => {
@@ -87,8 +87,8 @@ class MainLayout extends React.Component {
         >
         </TabBar.Item>
         <TabBar.Item
-          icon={this.renderIcon('https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg')}
-          selectedIcon={this.renderIcon('https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg')}
+          icon={'https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg'}
+          selectedIcon={'https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg'}
           title="我"
           key="我"
           selected={this.state.selectedTab === 'rightTab'}
@@ -96,7 +96,7 @@ class MainLayout extends React.Component {
             this.setState({
               selectedTab: 'rightTab',
               title:'我',
-              display:'none',
+              display:'',
             });
           }}
         >

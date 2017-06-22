@@ -1,22 +1,19 @@
 import React from 'react';
 import styles from './Information.css';
-import { Popup,List, Button, InputItem,WingBlank,WhiteSpace,Flex,Toast } from 'antd-mobile';
+import { Popup,List, Button, InputItem,WingBlank,WhiteSpace,Flex,Toast} from 'antd-mobile';
 import { createForm } from 'rc-form';
 import uploadIcon from './UploadIcon';
 
 let username;
 let password;
 
+let dispatch;
+
+const LENGTH = 2;
+
 const Item = List.Item;
 
 class PopupContent extends React.Component {
-  //构造器
-  constructor(props) {
-    super(props);
-    console.log('constructor');
-    console.log(props);
-  }
-
   render() {
     return (
       <div style={{textAlign:'center'}}>
@@ -44,39 +41,59 @@ class PopupContent extends React.Component {
 
 //表单验证的输入框
 class InputForm extends React.Component {
-  //构造器
-  constructor(props) {
-    super(props);
-    console.log('constructor');
-    console.log(props);
+  //注册
+  register = (newData) =>{
+    console.log('register');
+    console.log(newData);
+    dispatch({
+      type: 'user/register',
+      payload:newData
+   });
   }
-  state = {
-    value: 1,
+  //登录
+  login = (newData) =>{
+    console.log('login');
+    console.log(newData);
+    dispatch({
+      type: 'user/login',
+      payload:newData
+   });
   }
-  onSubmit = () => {
+  //点击按钮时候的表单验证
+  onSubmit = (type) => {
     this.props.form.validateFields({ force: true }, (error) => {
       if (!error) {
-        console.log(this.props.form.getFieldsValue());
+        const newData = this.props.form.getFieldsValue()
+        console.log('newData');
+        console.log(newData);
+        if(type == 'register'){
+          this.register(newData);
+        }else{
+          this.login(newData);
+        }
       } else {
         Toast.info('账号或密码格式错误...', 1.5);
       }
     });
   }
+  //重置表单
   onReset = () => {
     this.props.form.resetFields();
   }
+  //验证用户名
   validateUsername = (rule, value, callback) => {
-    if (value && value.length > 5) {
+    if (value && value.length >= LENGTH) {
       callback();
     } else {
-      callback(new Error('帐号至少6个字符'));
+      callback(new Error(`账号至少${LENGTH}个字符`));
     }
   }
+  //验证密码
   validatePassword = (rule, value, callback) => {
-    if (value && value.length > 5) {
+    if (value && value.length >= LENGTH) {
       callback();
     } else {
-      callback(new Error('密码至少6个字符'));
+      callback(new Error(`密码至少${LENGTH}个字符`));
     }
   }
   render() {
@@ -118,10 +135,10 @@ class InputForm extends React.Component {
       </List>
       <Flex direction="column" key='demo2'>
         <Button className={styles.btnStyle} size="small" type="primary"
-          onClick={()=>this.onSubmit()}>登   录</Button>
+          onClick={()=>this.onSubmit('login')}>登   录</Button>
           <WhiteSpace/>
         <Button className={styles.btnStyle} size="small" type="ghost"
-          onClick={()=>console.log('register')}>注   册</Button>
+          onClick={()=>this.onSubmit('register')}>注   册</Button>
       </Flex>
     </form>
     </div>
@@ -154,6 +171,16 @@ const UserComponent = () => {
 function Information({userData}) {
   console.log('userData');
   console.log(userData);
+  dispatch = userData.dispatch;
+
+  //退出登录
+  function outLogin(){
+    console.log('Login');
+    dispatch({
+      type: 'user/outLogin',
+      payload:{}
+   });
+  }
 
   //决定展示的内容
   const ContentComponent = () => {
@@ -162,9 +189,10 @@ function Information({userData}) {
       <div>
         <UserComponent/>
         <WhiteSpace size='lg'/>
-        <Button size='small'  onClick={() =>{} }>修改密码</Button>
+        {/* <Button size='small'  onClick={() =>{} }>修改密码</Button> */}
         <WhiteSpace size='lg'/>
-        <Button size='small' type="warning" onClick={() => outLogin()}>退出登录</Button>
+        <WhiteSpace size='lg'/>
+        <Button  size='small' type="warning" onClick={() => outLogin()}>退出登录</Button>
       </div>
     );
   }else{
