@@ -2,6 +2,8 @@
 import {Toast} from 'antd-mobile';
 import {UploaderBuilder, uploader} from 'qiniu4js';
 
+let dispatch;
+
 let Iconuploader = new UploaderBuilder().debug(false) //开启debug，默认false
 // .button('button')//指定上传按钮
   .domain({http: "http://upload-z2.qiniu.com", https: "https://upload-z2.qbox.me"}) //默认为{http: "http://upload.qiniu.com", https: "https://up.qbox.me"}
@@ -32,7 +34,7 @@ multiple(true) //是否支持多文件选中，默认true
 // 设置token获取URL：客户端向该地址发送HTTP GET请求, 若成功，服务器端返回{"uptoken": 'i-am-token'}。
 //
 // 覆盖tokenFunc的设置。
-  .tokenUrl('http://localhost:8000/api/token/query')
+  .tokenUrl('http://localhost/FireTable_Reader_php/token')
 
 // 设置token获取过程是否使用了saveKey，默认false。
 //
@@ -95,14 +97,12 @@ multiple(true) //是否支持多文件选中，默认true
   onTaskSuccess(task) {
     //一个任务上传成功后回调
     console.log(task.result.key); //文件的key
-
-    userData.icon = `http://opzvozftr.bkt.clouddn.com/${task.result.key}`;
-
-    const newData = userData;
-    console.log("userData");
+    const icon = `http://opzvozftr.bkt.clouddn.com/${task.result.key}`;
+    const newData = {'icon':icon};
+    console.log("icon");
     console.log(newData);
-    userData.dispatch({
-      type: 'users/update',
+    dispatch({
+      type: 'user/update',
       payload: {
         ...newData
       }
@@ -125,7 +125,8 @@ multiple(true) //是否支持多文件选中，默认true
 //uploader.start();
 
 //上传头像
-function uploadIcon() {
+function uploadIcon(userDataDispatch) {
+  dispatch = userDataDispatch;
   Iconuploader.chooseFile();
 }
 

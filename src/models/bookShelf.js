@@ -2,7 +2,7 @@
 export default {
   namespace: 'bookShelf',
   state: {
-    test:'test',
+    bookList:null
   },
   reducers: {},
   effects: {},

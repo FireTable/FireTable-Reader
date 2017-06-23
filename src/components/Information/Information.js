@@ -4,8 +4,10 @@ import { Popup,List, Button, InputItem,WingBlank,WhiteSpace,Flex,Toast} from 'an
 import { createForm } from 'rc-form';
 import uploadIcon from './UploadIcon';
 
-let username;
-let password;
+let username = '';
+let password = '';
+let nickname = '';
+let icon = '';
 
 let dispatch;
 
@@ -14,20 +16,30 @@ const LENGTH = 2;
 const Item = List.Item;
 
 class PopupContent extends React.Component {
+  //更新资料
+  update(nickname){
+    const newData = {'nickname':nickname};
+    dispatch({
+      type: 'user/update',
+      payload: {
+        ...newData
+      }
+    });
+  }
   render() {
     return (
       <div style={{textAlign:'center'}}>
         <WingBlank>
         <List renderHeader={() => `修改${this.props.type}`}>
             <InputItem  clear placeholder='必填'
-              onChange={value => {}}>
+              onChange={value => nickname = value}>
               新{this.props.type}
             </InputItem>
         </List>
           <WhiteSpace size='md'/>
           <Button  size="small" type="primary"
             onClick={() => {
-              console.log('ok');
+              this.update(nickname);
               Popup.hide();
             }}>确定</Button>
           <WhiteSpace size='sm'/>
@@ -160,8 +172,8 @@ const UserComponent = () => {
   };
   return (
     <div>
-        <img className={styles.icon} src="http://i2.muimg.com/1949/e1bd2462b1e4391a.jpg" alt="头像" onClick={uploadIcon} />
-        <div onClick={(e)=>onClick(e,'昵称')}>Todos</div>
+        <img className={styles.icon} src={icon}  onClick={()=>uploadIcon(dispatch)} />
+        <div onClick={(e)=>onClick(e,'昵称')}>{nickname}</div>
     </div>
   );
 };
@@ -171,8 +183,11 @@ const UserComponent = () => {
 function Information({userData}) {
   console.log('userData');
   console.log(userData);
+  nickname = userData.nickname;
+  password = userData.password;
+  username = userData.username;
+  icon = userData.icon;
   dispatch = userData.dispatch;
-
   //退出登录
   function outLogin(){
     console.log('Login');

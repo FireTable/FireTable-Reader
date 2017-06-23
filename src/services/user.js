@@ -29,24 +29,24 @@ export async function create(params) {
   return data;
 }
 
-//删除
-export async function _delete(params) {
-  const data =request(`${url}/delete/${params.id}`,
-  {
-    method: 'DELETE'
-  });
-
-  return data;
-}
+// //删除
+// export async function _delete(params) {
+//   const data =request(`${url}/delete/${params.id}`,
+//   {
+//     method: 'DELETE'
+//   });
+//
+//   return data;
+// }
 
 //更新,patch提交的是json
 export async function update(params) {
   console.log(params);
-  const data =request(`${url}/update/${params.id}`,
+  const data =request(`${url}/${params.id}`,
   {
     method: 'PATCH',//PUT对资源完全替换,PATCH局部替换
-    headers:{
-      'Content-Type':'application/json'
+    headers: {
+    "Content-Type": "application/json",
     },
     body:JSON.stringify(params)
   });
@@ -54,13 +54,11 @@ export async function update(params) {
   return data;
 }
 
-
 //登录查询
 export async function query(params) {
   const data =request(`${url}/${params.username}/${params.password}`,
   {
     method: 'GET' //必须添加POST/GET请求,否则发送的会是OPTIONS请求,PHP无法获得数据,FETCH的特性
   });
-
   return data;
 }

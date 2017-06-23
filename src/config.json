@@ -1,0 +1,6 @@
+{
+  "url": {
+    "user":"http://localhost/FireTable_Reader_php/user",
+    "token":"http://localhost/FireTable_Reader_php/token",
+  }
+}

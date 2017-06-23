@@ -1,4 +1,4 @@
-import { create,query} from '../services/user';
+import { create,query,update} from '../services/user';
 import {Toast} from 'antd-mobile';
 import { routerRedux } from 'dva/router';
 
@@ -11,6 +11,7 @@ export default {
     username:null,
     nickname:null,
     icon:null,
+    password:null,
   },
   reducers: {
     //退出登录
@@ -20,15 +21,14 @@ export default {
         id:null,
         username:null,
         nickname:null,
+        password:null,
         icon:null,
       };
     },
     //注册成功
     registerSuccess(state,{payload:newData}){
-      Toast.info('注册中...', TIME);
-      return{...state,
-        ...newData,
-      };
+      Toast.info('注册成功...', TIME);
+      return{...state};
     },
     //注册失败
     registerFail(state,{payload:newData}){
@@ -45,6 +45,18 @@ export default {
     //登录失败
     loginFail(state,{payload:newData}){
       Toast.info('账号或密码错误，登录失败...', TIME);
+      return{...state};
+    },
+    //修改成功
+    updateSuccess(state,{payload:newData}){
+      Toast.info('修改成功...', TIME);
+      return{...state,
+        ...newData,
+      };
+    },
+    //修改失败
+    updateFail(state,{payload:newData}){
+      Toast.info('修改资料失败...', TIME);
       return{...state};
     },
   },
@@ -80,6 +92,27 @@ export default {
       }else{
         yield put({
           type: 'loginFail',
+          payload: {}
+        });
+      }
+    },
+    //修改资料
+    *update({ payload : newData },{ select ,call, put}){
+      const oldData = yield select(state => state.user);
+      newData = {...oldData,...newData};
+      console.log('newData');
+      console.log(newData);
+      const {data} = yield call(() => update(newData));
+      if (data.state =='success') {
+        yield put({
+          type: 'updateSuccess',
+          payload: {
+            ...data
+          }
+        });
+      }else{
+        yield put({
+          type: 'updateFail',
           payload: {}
         });
       }
