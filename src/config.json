@@ -2,5 +2,7 @@
   "url": {
     "user":"http://localhost/FireTable_Reader_php/user",
     "token":"http://localhost/FireTable_Reader_php/token",
+    "bookAPI":"http://novel.juhe.im/",
+    "bookShelf":"http://localhost/FireTable_Reader_php/bookShelf"
   }
 }

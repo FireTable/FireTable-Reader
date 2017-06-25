@@ -7,6 +7,7 @@ const Item = List.Item;
 const Brief = Item.Brief;
 let books;
 let ItemList = '';
+let details;
 
 function BookSearch({bookSearchData}) {
   console.log('bookSearchData');
@@ -14,6 +15,7 @@ function BookSearch({bookSearchData}) {
 
   //获取model中的数据
   const data = bookSearchData.data;
+  details = bookSearchData.details;
 
   //查询书籍id
   function queryId(id){
@@ -29,6 +31,35 @@ function BookSearch({bookSearchData}) {
   function backIndexPage(){
     //跳转到主页面
     bookSearchData.dispatch(routerRedux.push('/'));
+  }
+
+  //添加书本到书架
+   function addBook(){
+     //通过计时器来获取书本信息
+    const timer=setInterval(function(){
+      console.log('Timer working');
+      console.log(details);
+      if(details != null ){
+        const bookData = details.data;
+        const newData = {
+          book_id:bookData._id,
+          book_icon:bookData.cover,
+          book_name:bookData.title
+        };
+        //添加书本到书架
+        bookSearchData.dispatch({
+          type: 'bookShelf/create',
+          payload:newData
+       });
+       //清除detail值
+       details = null;
+       //清除计时器
+       clearInterval(timer);
+
+     }else{
+       console.log('No details');
+     }
+   },200);
   }
 
   if(data != null){
@@ -48,11 +79,14 @@ function BookSearch({bookSearchData}) {
                 },
                 {
                   text: '追书',
-                  onPress: () => console.log('追书'),
+                  onPress: () => {
+                    queryId(`${book._id}`);
+                    addBook();
+                  },
                   style: { backgroundColor: '#F66666', color: 'white' },
                 },
               ]}
-              onOpen={() => queryId(`${book._id}`)}
+              onOpen={() => console.log('global open')}
               onClose={() => console.log('global close')}
           >
           <Item
@@ -60,9 +94,8 @@ function BookSearch({bookSearchData}) {
               arrow="horizontal"
               key={book._id}
               wrap
-              onClick={ () => {
-                queryId(`${book._id}`);
-              }
+              onClick={ () =>
+              console.log('onClick')
             }
               >
                 <span style={{fontSize:'0.34rem'}}>

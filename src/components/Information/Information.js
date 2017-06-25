@@ -58,7 +58,7 @@ class InputForm extends React.Component {
     console.log('register');
     console.log(newData);
     dispatch({
-      type: 'user/register',
+      type: 'user/create',
       payload:newData
    });
   }
@@ -67,7 +67,7 @@ class InputForm extends React.Component {
     console.log('login');
     console.log(newData);
     dispatch({
-      type: 'user/login',
+      type: 'user/query',
       payload:newData
    });
   }

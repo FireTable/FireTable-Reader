@@ -26,24 +26,24 @@ export default {
       };
     },
     //注册成功
-    registerSuccess(state,{payload:newData}){
+    createSuccess(state,{payload:newData}){
       Toast.info('注册成功...', TIME);
       return{...state};
     },
     //注册失败
-    registerFail(state,{payload:newData}){
+    createFail(state,{payload:newData}){
       Toast.info('账号已存在，注册失败...', TIME);
       return{...state};
     },
     //登录成功
-    loginSuccess(state,{payload:newData}){
+    querySuccess(state,{payload:newData}){
       Toast.info('登陆中...', TIME);
       return{...state,
         ...newData,
       };
     },
     //登录失败
-    loginFail(state,{payload:newData}){
+    queryFail(state,{payload:newData}){
       Toast.info('账号或密码错误，登录失败...', TIME);
       return{...state};
     },
@@ -62,36 +62,36 @@ export default {
   },
   effects: {
     //注册
-    *register({ payload : newData },{ select ,call, put}){
+    *create({ payload : newData },{ select ,call, put}){
       newData = {...newData,'nickname':newData.username}
       const {data} = yield call(() => create(newData));
       if (data.state =='success') {
         yield put({
-          type: 'registerSuccess',
+          type: 'createSuccess',
           payload: {
             ...data
           }
         });
       }else{
         yield put({
-          type: 'registerFail',
+          type: 'createFail',
           payload: {}
         });
       }
     },
     //登录
-    *login({ payload : newData },{ select ,call, put}){
+    *query({ payload : newData },{ select ,call, put}){
       const {data} = yield call(() => query(newData));
       if (data.state =='success') {
         yield put({
-          type: 'loginSuccess',
+          type: 'querySuccess',
           payload: {
             ...data
           }
         });
       }else{
         yield put({
-          type: 'loginFail',
+          type: 'queryFail',
           payload: {}
         });
       }

@@ -4,7 +4,7 @@ import request from '../utils/request';
 const config = require('../config.json');
 
 //读取配置文件的url
-const url = config.url.user;
+const url = config.url.bookShelf;
 
 //params转换为formData,提供给post用
 function paramsTOformData(params){
@@ -30,6 +30,15 @@ export async function create(params) {
   return data;
 }
 
+//删除
+export async function _delete(params) {
+  const data =request(`${url}/${params.id}`,
+  {
+    method: 'DELETE'
+  });
+
+  return data;
+}
 
 
 //更新,patch提交的是json
@@ -47,9 +56,9 @@ export async function update(params) {
   return data;
 }
 
-//登录查询
+//查询
 export async function query(params) {
-  const data =request(`${url}/${params.username}/${params.password}`,
+  const data =request(`${url}/${params.user_id}`,
   {
     method: 'GET' //必须添加POST/GET请求,否则发送的会是OPTIONS请求,PHP无法获得数据,FETCH的特性
   });

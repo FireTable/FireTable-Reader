@@ -2,6 +2,10 @@
 import {Toast} from 'antd-mobile';
 import {UploaderBuilder, uploader} from 'qiniu4js';
 
+const config = require('../../config.json');
+
+const url = config.url.token;
+
 let dispatch;
 
 let Iconuploader = new UploaderBuilder().debug(false) //开启debug，默认false
@@ -34,7 +38,7 @@ multiple(true) //是否支持多文件选中，默认true
 // 设置token获取URL：客户端向该地址发送HTTP GET请求, 若成功，服务器端返回{"uptoken": 'i-am-token'}。
 //
 // 覆盖tokenFunc的设置。
-  .tokenUrl('http://localhost/FireTable_Reader_php/token')
+  .tokenUrl(url)
 
 // 设置token获取过程是否使用了saveKey，默认false。
 //
