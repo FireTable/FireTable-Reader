@@ -51,8 +51,6 @@ function BookSearch({bookSearchData}) {
           type: 'bookShelf/create',
           payload:newData
        });
-       //清除detail值
-       details = null;
        //清除计时器
        clearInterval(timer);
 

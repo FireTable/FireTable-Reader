@@ -22,7 +22,7 @@ export default {
     queryFail(state,{payload:newData}){
       console.log('queryFail');
       return{
-        ...state,
+        bookList:null
       };
     },
     //创建成功
@@ -86,6 +86,10 @@ export default {
         });
       }else{
         console.log('获取数据失败');
+        yield put({
+          type: 'query',
+          payload: {}
+        });
       }
     },
     //添加书本
@@ -100,6 +104,11 @@ export default {
           payload: {
             ...data
           }
+        });
+        //清空search缓存的书本数据
+        yield put({
+          type: 'bookSearch/removeDetails',
+          payload: {}
         });
       }else{
         yield put({

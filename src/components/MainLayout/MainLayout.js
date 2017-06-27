@@ -17,10 +17,6 @@ class MainLayout extends React.Component {
     };
   }
 
-    // state ={
-    //     averageListData:this.props.averageListData,
-    //   }
-
   //决定展示的内容
   decideContent(){
     //内容展示初始化

@@ -11,6 +11,13 @@ export default {
     details:null,
   },
   reducers: {
+    //清空details的数值
+    removeDetails(state,{payload:newData}){
+      return{
+        ...state,
+        details:null,
+      };
+    },
     //查询成功
     querySuccess(state,{payload:newData}){
       console.log('querySuccess');
