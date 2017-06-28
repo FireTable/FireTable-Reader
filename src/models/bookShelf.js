@@ -6,9 +6,19 @@ const TIME = 1.2;
 export default {
   namespace: 'bookShelf',
   state: {
-    bookList:null
+    bookList:null,
+    book:null
   },
   reducers: {
+    //保存书的信息
+    saveBook(state,{payload:newData}){
+      console.log('saveBook');
+      console.log(newData);
+      return{
+        ...state,
+        book:newData,
+      };
+    },
     //查询成功
     querySuccess(state,{payload:newData}){
       console.log('querySuccess');
@@ -117,7 +127,7 @@ export default {
         });
       }
     },
-    //修改资料
+    //修改书看到第几页
     *update({ payload : newData },{ select ,call, put}){
       const oldData = yield select(state => state.user);
       newData = {...oldData,...newData};

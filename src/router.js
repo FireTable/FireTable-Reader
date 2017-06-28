@@ -9,7 +9,7 @@ import BookReader from "./routes/BookReader.js";
 function RouterConfig({ history }) {
   return (
     <Router history={history}>
-      <Route path="/" component={BookReader} />
+      <Route path="/" component={IndexPage} />
       <Route path="/bookSearch" component={BookSearch} />
       <Route path="/bookReader" component={BookReader} />
     </Router>

@@ -10,7 +10,7 @@ const url = config.url.bookAPI;
 export async function queryKeyword(params) {
   console.log('queryKeyword_service');
   console.log(params);
-  const data =request(`${url}search?keyword=${params.keyword}`,
+    const data =request(`${url}search?keyword=${params.keyword}`,
   {
     method: 'GET'
   });

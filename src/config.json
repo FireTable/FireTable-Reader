@@ -3,6 +3,9 @@
     "user":"http://localhost/FireTable_Reader_php/user",
     "token":"http://localhost/FireTable_Reader_php/token",
     "bookAPI":"http://novel.juhe.im/",
-    "bookShelf":"http://localhost/FireTable_Reader_php/bookShelf"
+    "bookShelf":"http://localhost/FireTable_Reader_php/bookShelf",
+    "queryChapter":"http://35.189.165.140:3000/atoc",
+    "queryBody":"http://35.189.165.140:3000/getChapter?chapterUrl",
+    "bookSource":"http://35.189.165.140:3000/toc?view=summary&book"
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './BookShelf.css';
-import { routerRedux} from 'dva/router';
+import {routerRedux} from 'dva/router';
 import {SearchBar, Button, WhiteSpace, WingBlank, Grid,NoticeBar,Tag,Modal} from 'antd-mobile';
 import _ from 'lodash';
 
@@ -31,7 +31,7 @@ function BookShelf({bookShelfData}) {
       payload:newData
    });
    //跳转到搜索页面
-   bookShelfData.dispatch(routerRedux.push('/BookSearch'));
+   bookShelfData.dispatch(routerRedux.push('/bookSearch'));
   }
 
   //查询书架的书
@@ -49,6 +49,20 @@ function BookShelf({bookShelfData}) {
       type: 'bookShelf/_delete',
       payload:newData
    });
+  }
+
+  //看书
+  function readBook(data){
+    const newData = data;
+    console.log('readBook');
+    console.log(newData);
+    //先保存书的信息
+    bookShelfData.dispatch({
+      type: 'bookShelf/saveBook',
+      payload:newData
+   });
+   //跳转到看书页面
+   bookShelfData.dispatch(routerRedux.push('/bookReader'));
   }
 
   //决定显示内容
@@ -72,7 +86,7 @@ function BookShelf({bookShelfData}) {
               const data = el[1];
               const id = data.id;
               operation([
-                  { text: '开始阅读', onPress: () => console.log('开始阅读被点击了')},
+                  { text: '开始阅读', onPress: () => readBook(data)},
                   { text: '不追了', onPress: () => deleteBook(id),style:{color:'#F66666'}},
                   { text: '取消', onPress:() => console.log('取消') },
                 ]);
