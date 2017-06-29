@@ -53,7 +53,7 @@ export async function update(params) {
     },
     body:JSON.stringify(params)
   });
-
+  
   return data;
 }
 

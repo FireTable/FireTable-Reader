@@ -108,7 +108,6 @@ function BookShelf({bookShelfData}) {
 
   return (
     <div className={styles.normal}>
-      <Button onClick={()=>queryShelf()}>abc</Button>
       <SearchBar placeholder="搜索"
         onSubmit={(value) => queryKeyword(value)}
       />

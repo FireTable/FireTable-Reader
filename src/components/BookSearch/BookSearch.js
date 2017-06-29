@@ -5,16 +5,15 @@ import { routerRedux} from 'dva/router';
 
 const Item = List.Item;
 const Brief = Item.Brief;
-let books;
+let books = null;
 let ItemList = '';
-let details;
+let details = null;
 
 function BookSearch({bookSearchData}) {
   console.log('bookSearchData');
   console.log(bookSearchData);
 
   //获取model中的数据
-  const data = bookSearchData.data;
   details = bookSearchData.details;
 
   //查询书籍id
@@ -40,7 +39,8 @@ function BookSearch({bookSearchData}) {
       console.log('Timer working');
       console.log(details);
       if(details != null ){
-        const bookData = details.data;
+        const bookData = details;
+        bookData.cover = bookData.cover.replace("/agent/","");
         const newData = {
           book_id:bookData._id,
           book_icon:bookData.cover,
@@ -60,10 +60,11 @@ function BookSearch({bookSearchData}) {
    },200);
   }
 
-  if(data != null){
-    books = data.books;
+  if(bookSearchData.books != null){
+    books = bookSearchData.books;
     //列表
     ItemList = books.map(book =>{
+      book.cover = book.cover.replace("/agent/","");
       return(
           <div>
           <SwipeAction
@@ -108,10 +109,8 @@ function BookSearch({bookSearchData}) {
                 <span style={{fontSize:'0.26rem',color:'#99aa66'}}>
                 ·{book.hasCp == true? '已完本':'连载中'}
                 </span>
-
                <div style={{fontSize:'0.26rem',color:'#666666',marginTop:'0.01rem'}}>
                     作者:{book.author} &nbsp;&nbsp;&nbsp;字数:{(book.wordCount/10000).toFixed(1)}w
-
                     <br/>
                </div>
                <div style={{fontSize:'0.26rem',color:'#666666',marginTop:'0.01rem'}}>

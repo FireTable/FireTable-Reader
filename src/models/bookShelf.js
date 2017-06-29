@@ -10,6 +10,24 @@ export default {
     book:null
   },
   reducers: {
+    //上一页
+    prePage(state,{payload:newData}){
+      console.log('nextPage_model');
+      console.log(newData);
+      state = {...state,book:{...state.book,...newData}};
+      return{
+        ...state
+      };
+    },
+    //下一页
+    nextPage(state,{payload:newData}){
+      console.log('nextPage_model');
+      console.log(newData);
+      state = {...state,book:{...state.book,...newData}};
+      return{
+        ...state
+      };
+    },
     //保存书的信息
     saveBook(state,{payload:newData}){
       console.log('saveBook');
@@ -47,14 +65,10 @@ export default {
     },
     //修改成功
     updateSuccess(state,{payload:newData}){
-      Toast.info('同步成功...', TIME);
-      return{...state,
-        ...newData,
-      };
+      return{...state};
     },
     //修改失败
     updateFail(state,{payload:newData}){
-      Toast.info('同步失败...', TIME);
       return{...state};
     },
   },
@@ -129,11 +143,10 @@ export default {
     },
     //修改书看到第几页
     *update({ payload : newData },{ select ,call, put}){
-      const oldData = yield select(state => state.user);
-      newData = {...oldData,...newData};
-      console.log('newData');
-      console.log(newData);
-      const {data} = yield call(() => update(newData));
+      const bookData = yield select(state => state.bookShelf.book);
+      console.log('bookData');
+      console.log(bookData);
+      const {data} = yield call(() => update(bookData));
       if (data.state =='success') {
         yield put({
           type: 'updateSuccess',
@@ -149,5 +162,17 @@ export default {
       }
     },
   },
-  subscriptions: {},
+  subscriptions: {
+    setup({ dispatch, history }) {
+     history.listen(({ pathname }) => {
+       if (pathname === '/') {
+         console.log('查询书架');
+         dispatch({
+           type: 'bookShelf/query',
+           payload:{}
+        });
+       }
+     });
+   },
+  },
 };

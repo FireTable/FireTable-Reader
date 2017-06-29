@@ -3,10 +3,8 @@ import { queryKeyword,queryId} from '../services/bookSearch';
 export default {
   namespace: 'bookSearch',
   state: {
-    code:null,
-    message:null,
     //data为搜索书籍的数组
-    data:null,
+    books:null,
     loading:null,
     details:null,
   },
@@ -63,7 +61,7 @@ export default {
       console.log(newData);
       const {data} = yield call(() => queryId(newData));
       if (data) {
-        const temp = {details:data};
+        const temp = { details:data };
         console.log('获取数据成功');
         console.log(temp);
         yield put({

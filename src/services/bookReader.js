@@ -8,6 +8,7 @@ const url_bookShelf = config.url.bookShelf;
 const url_chapter = config.url.queryChapter;
 const url_body = config.url.queryBody;
 const bookSource = config.url.bookSource;
+const url_bookReader = config.url.bookReader;
 
 //params转换为formData,提供给post用
 function paramsTOformData(params){

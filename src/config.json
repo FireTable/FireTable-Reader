@@ -2,10 +2,31 @@
   "url": {
     "user":"http://localhost/FireTable_Reader_php/user",
     "token":"http://localhost/FireTable_Reader_php/token",
-    "bookAPI":"http://novel.juhe.im/",
     "bookShelf":"http://localhost/FireTable_Reader_php/bookShelf",
+    "bookReader":"http://localhost/FireTable_Reader_php/bookReader",
+    "queryKeyword":"http://35.189.165.140:3000/book/fuzzy-search?query",
+    "queryId":"http://35.189.165.140:3000/book",
     "queryChapter":"http://35.189.165.140:3000/atoc",
     "queryBody":"http://35.189.165.140:3000/getChapter?chapterUrl",
     "bookSource":"http://35.189.165.140:3000/toc?view=summary&book"
+  },
+  "config":{
+    "touchjs":{
+      "tap": true,
+      "doubleTap": true,
+      "tapMaxDistance": 10,
+      "hold": true,
+      "tapTime": 200,
+      "holdTime": 650,
+      "maxDoubleTapInterval": 300,
+      "swipe": true,
+      "swipeTime": 300,
+      "swipeMinDistance": 18,
+      "swipeFactor": 5,
+      "drag": true,
+      "pinch": true,
+      "minScaleRate": 0,
+      "minRotationAngle": 0
+    }
   }
 }

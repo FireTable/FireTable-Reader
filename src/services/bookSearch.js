@@ -4,13 +4,14 @@ import request from '../utils/request';
 const config = require('../config.json');
 
 //``使用连接字符串,request的url
-const url = config.url.bookAPI;
+const url_keyword = config.url.queryKeyword;
+const url_id = config.url.queryId;
 
 //查询关键字
 export async function queryKeyword(params) {
   console.log('queryKeyword_service');
   console.log(params);
-    const data =request(`${url}search?keyword=${params.keyword}`,
+    const data =request(`${url_keyword}=${params.keyword}`,
   {
     method: 'GET'
   });
@@ -21,7 +22,7 @@ export async function queryKeyword(params) {
 export async function queryId(params) {
   console.log('queryId_service');
   console.log(params);
-  const data =request(`${url}book-info/${params.id}`,
+  const data =request(`${url_id}/${params.id}`,
   {
     method: 'GET'
   });
