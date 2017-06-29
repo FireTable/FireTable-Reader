@@ -10,23 +10,15 @@
     "queryBody":"http://35.189.165.140:3000/getChapter?chapterUrl",
     "bookSource":"http://35.189.165.140:3000/toc?view=summary&book"
   },
-  "config":{
-    "touchjs":{
-      "tap": true,
-      "doubleTap": true,
-      "tapMaxDistance": 10,
-      "hold": true,
-      "tapTime": 200,
-      "holdTime": 650,
-      "maxDoubleTapInterval": 300,
-      "swipe": true,
-      "swipeTime": 300,
-      "swipeMinDistance": 18,
-      "swipeFactor": 5,
-      "drag": true,
-      "pinch": true,
-      "minScaleRate": 0,
-      "minRotationAngle": 0
-    }
+  "color":{
+    "1":"#F1E5C9",
+    "2":"#f5f5f9",
+    "3":"#FFFFFF",
+    "4":"#DCE2F1",
+    "5":"#FDE6E0"
+  },
+  "length":{
+    "username":2,
+    "password":2
   }
 }

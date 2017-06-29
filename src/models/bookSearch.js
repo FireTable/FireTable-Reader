@@ -1,4 +1,4 @@
-import { queryKeyword,queryId} from '../services/bookSearch';
+import {queryKeyword,queryId} from '../services/bookSearch';
 
 export default {
   namespace: 'bookSearch',

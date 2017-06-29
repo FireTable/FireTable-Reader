@@ -8,12 +8,14 @@ class MainLayout extends React.Component {
   //构造器
   constructor(props) {
     super(props);
+    console.log('MainLayout');
     console.log(props);
     this.state = {
       selectedTab: 'leftTab',
       hidden: false,
       title:'书架',
       display:'',
+      dispatch:props.layoutData.dispatch
     };
   }
 
@@ -79,6 +81,11 @@ class MainLayout extends React.Component {
               title:'书架',
               display:'',
             });
+            //点击查询
+            this.state.dispatch({
+              type: 'bookShelf/query',
+              payload:{}
+           });
           }}
         >
         </TabBar.Item>

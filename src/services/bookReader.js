@@ -4,11 +4,11 @@ import request from '../utils/request';
 const config = require('../config.json');
 
 //读取配置文件
-const url_bookShelf = config.url.bookShelf;
+const url_bookReader = config.url.bookReader;
 const url_chapter = config.url.queryChapter;
 const url_body = config.url.queryBody;
 const bookSource = config.url.bookSource;
-const url_bookReader = config.url.bookReader;
+
 
 //params转换为formData,提供给post用
 function paramsTOformData(params){
@@ -26,7 +26,7 @@ export async function create(params) {
   //post需要用formData来传输值,fetch中并没有内置,需要自己创建
   //这里我用了个params转换为formdata的自写方法
   const  formData = paramsTOformData(params);
-  const data = request(`${url_bookShelf}`,
+  const data = request(`${url_bookReader}`,
   {
     method: 'POST',
     body:formData
@@ -34,21 +34,20 @@ export async function create(params) {
   return data;
 }
 
-//删除
-export async function _delete(params) {
-  const data =request(`${url_bookShelf}/${params.id}`,
+//查询
+export async function query(params) {
+  const data =request(`${url_bookReader}/${params.user_id}`,
   {
-    method: 'DELETE'
+    method: 'GET' //必须添加POST/GET请求,否则发送的会是OPTIONS请求,PHP无法获得数据,FETCH的特性
   });
-
   return data;
 }
 
-
 //更新,patch提交的是json
 export async function update(params) {
+  console.log('update_service');
   console.log(params);
-  const data =request(`${url_bookShelf}/${params.id}`,
+  const data =request(`${url_bookReader}/${params.id}`,
   {
     method: 'PATCH',//PUT对资源完全替换,PATCH局部替换
     headers: {

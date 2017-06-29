@@ -1,4 +1,4 @@
-import { queryChapter,queryBody,queryBookSource} from '../services/bookReader';
+import {queryChapter,queryBody,queryBookSource,create,query,update} from '../services/bookReader';
 import {Toast} from 'antd-mobile';
 
 const TIME = 1.2;
@@ -6,8 +6,9 @@ const TIME = 1.2;
 export default {
   namespace: 'bookReader',
   state: {
+    id:null,
     fontSize:30,
-    background:'green',
+    background:'#f5f5f9',
     loading:null,
     text:'',
     title:'',
@@ -16,6 +17,55 @@ export default {
     bookSource_id:0,
   },
   reducers: {
+    //清空阅读器
+    resetReader(state,{payload:newData}){
+      return{
+        id:null,
+        fontSize:30,
+        background:'#f5f5f9',
+        loading:null,
+        text:'',
+        title:'',
+        chapters:null,
+        bookSource:null,
+        bookSource_id:0,
+      };
+    },
+    //查询成功
+    querySuccess(state,{payload:newData}){
+      console.log('querySuccess');
+      console.log(newData);
+      return{
+        ...state,
+        ...newData,
+      };
+    },
+    //查询失败
+    queryFail(state,{payload:newData}){
+      console.log('queryFail');
+      return{
+        bookList:null
+      };
+    },
+    //创建成功
+    createSuccess(state,{payload:newData}){
+      return{...state};
+    },
+    //创建失败
+    createFail(state,{payload:newData}){
+      return{...state};
+    },
+    //修改成功
+    updateSuccess(state,{payload:newData}){
+      return{
+        ...state,
+        ...newData,
+      };
+    },
+    //修改失败
+    updateFail(state,{payload:newData}){
+      return{...state};
+    },
     //重置书源
     resetBookSource(state,{payload:newData}){
       return{
@@ -94,6 +144,68 @@ export default {
     },
   },
   effects: {
+    //查询阅读器配置
+    *query({ payload : Data },{ select ,call, put}){
+      console.log('query');
+      const user_id = yield select(state => state.user.id);
+      const newData = {user_id:user_id};
+      const {data} = yield call(() => query(newData));
+      if (data.state =='success') {
+        console.log('获取数据成功');
+        console.log(data);
+        yield put({
+          type: 'querySuccess',
+          payload: {
+            ...data
+          }
+        });
+      }else{
+        console.log('获取数据失败');
+        yield put({
+          type: 'queryFail',
+          payload: {}
+        });
+      }
+    },
+    //添加新的阅读器配置
+    *create({ payload : newData },{ select ,call, put}){
+      newData = {...newData,'user_id':newData.id};
+      const {data} = yield call(() => create(newData));
+      console.log(data);
+      if (data.state =='success') {
+        yield put({
+          type: 'createSuccess',
+          payload: {
+            ...data
+          }
+        });
+      }else{
+        yield put({
+          type: 'createFail',
+          payload: {}
+        });
+      }
+    },
+    //修改阅读器配置
+    *update({ payload : newData },{ select ,call, put}){
+      console.log('update');
+      console.log('newData');
+      console.log(newData);
+      const {data} = yield call(() => update(newData));
+      if (data.state =='success') {
+        yield put({
+          type: 'updateSuccess',
+          payload: {
+            ...data
+          }
+        });
+      }else{
+        yield put({
+          type: 'updateFail',
+          payload: {}
+        });
+      }
+    },
     //打开阅读器
     *loadData({ payload : oldData },{ select ,call, put}){
       //找书源
@@ -182,13 +294,6 @@ export default {
       if (data) {
         console.log('获取数据成功');
         console.log(data);
-        yield put({
-          type: 'queryBodySuccess',
-          payload: {
-            ...data
-          }
-        });
-        //必须触发两次,让页数正常显示
         yield put({
           type: 'queryBodySuccess',
           payload: {
@@ -292,5 +397,17 @@ export default {
       }
     },
   },
-  subscriptions: {},
+  subscriptions: {
+    setup({ dispatch, history }) {
+     history.listen(({ pathname }) => {
+       if (pathname === '/bookReader') {
+         console.log('查询阅读器配置');
+         dispatch({
+           type: 'bookReader/query',
+           payload:{}
+        });
+       }
+     });
+   },
+  },
 };

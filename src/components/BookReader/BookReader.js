@@ -1,14 +1,21 @@
 import React from 'react';
 import styles from './BookReader.css';
-import {Pagination,Popup,List,Button,WhiteSpace,WingBlank,Toast} from 'antd-mobile';
+import {Pagination,Popup,List,Button,WhiteSpace,WingBlank,Toast,Icon} from 'antd-mobile';
 import {routerRedux} from 'dva/router';
 import touch from 'touchjs';
 import _ from 'lodash';
 
 const config = require('../../config.json');
-const touchjs_config = config.config.touchjs;
-const Item = List.Item;
+let colorList = config.color;
 
+console.log('color');
+console.log(colorList);
+
+colorList =  _.toPairs(colorList);
+
+console.log(colorList);
+
+const Item = List.Item;
 
 
 //popup的设置
@@ -28,8 +35,6 @@ class BookReader extends React.Component{
     console.log(props);
     const bookReaderData = props.bookReaderData;
     this.state = {
-      fontSize:bookReaderData.fontSize,
-      background:bookReaderData.background,
       dispatch:bookReaderData.dispatch,
     };
     console.log(this.state);
@@ -95,16 +100,17 @@ class BookReader extends React.Component{
         case 'right' :
           this.nextPage();
           break;
-        default :
-          break;
       }
     });
   }
 
   //获取页码
   getPages(){
+    console.log('getPages');
     const myReaderDOM = this.refs.myReader;
-    let pages = Math.ceil(parseInt(myReaderDOM.scrollHeight)/parseInt(myReaderDOM.offsetHeight));
+    let pages = Math.ceil(parseInt(myReaderDOM.scrollHeight)/parseInt(window.innerHeight));
+    console.log(myReaderDOM.scrollHeight);
+    console.log();
     this.setState({
       current : 0,
       pages : pages,
@@ -121,10 +127,9 @@ class BookReader extends React.Component{
 
   //浏览器滚动事件
   handleScroll() {
-    let myReaderDOM = this.refs.myReader;
     //获取当前位置
     const nowHeight = document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset;
-    const current = Math.ceil(parseInt(nowHeight)/parseInt(myReaderDOM.offsetHeight));
+    const current = Math.ceil(parseInt(nowHeight)/parseInt(window.innerHeight));
     //如果计数改变了,就改变
     if(current != this.state.current){
       this.setState({
@@ -155,31 +160,81 @@ class BookReader extends React.Component{
     this.getPages();
   }
 
-  //组件重新渲染完毕
-  componentDidUpdate(){
-
+  //更改样式
+  updateStyles(type,value){
+    const bookReaderData = this.props.bookReaderData;
+    console.log('updateStyles');
+    console.log(value);
+    let newData = {
+      id:bookReaderData.id,
+      fontSize:bookReaderData.fontSize,
+      background:bookReaderData.background
+    };
+    switch (type) {
+      case 'fontSizeAdd':
+        newData.fontSize++;
+        break;
+      case 'fontSizeMinus':
+        newData.fontSize--;
+        break;
+      case 'background':
+        newData.background = value;
+        break;
+    }
+    console.log(newData);
+    this.state.dispatch({
+      type: 'bookReader/update',
+      payload:{
+        ...newData
+      }
+   });
   }
 
   //打开功能栏
   openFunctionBar(){
+    const ColorDiv = colorList.map(color =>{
+        return(
+          <span>
+            <div className={styles.color}
+                 style={{background:`${color[1]}`}}
+                 onClick={()=>this.updateStyles('background',`${color[1]}`)}
+                 ></div>
+            &nbsp;
+          </span>
+        );
+      });
+
     Popup.show(
       <div>
       <List renderHeader={() => (
         <div style={{ position: 'relative' }}>
           更改样式
-          <span style={{position: 'absolute', right: 3, top: -5}}>
+          <span style={{position: 'absolute', right: 3, top: -4.5}}
+            onClick={() => Popup.hide()}>
+            <Icon type={require('!svg-sprite!../../assets/icon/cannel.svg')}
+                  style={{position: 'absolute', right: 1}}
+            />
           </span>
         </div>)}
-        className="popup-list"
       >
-      <Item extra='字号'><span>Aa-</span>&nbsp;&nbsp;<span>Aa+</span></Item>
-      <Item extra='背景'></Item>
+      <Item extra='字号'>
+        <div className={styles.font}
+             onClick={()=>this.updateStyles('fontSizeMinus','fontSizeMinus')}
+             >Aa-</div>
+        &nbsp;
+        <div className={styles.font}
+             onClick={()=>this.updateStyles('fontSizeAdd','fontSizeAdd')}
+          >Aa+</div>
+      </Item>
+      <Item extra='背景'>
+        {ColorDiv}
+      </Item>
       <WingBlank>
       <WhiteSpace size='md'/>
         <Button  size="small" type="primary"
           onClick={() => {
             Popup.hide();
-          }}>确定</Button>
+          }}>继续阅读</Button>
         <WhiteSpace size='sm'/>
         <Button  size="small" type="ghost" onClick={() => {
           Toast.info('返回书架...',1.2);

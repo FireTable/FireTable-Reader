@@ -9,9 +9,10 @@ import InformationComponent from '../components/Information/Information';
 function IndexPage({userData,bookShelfData,dispatch}) {
   bookShelfData = {...bookShelfData,dispatch};
   userData = {...userData,dispatch};
+  const layoutData = {dispatch:dispatch};
   return (
     <div className={styles.normal}>
-      <MainLayoutComponent>
+      <MainLayoutComponent layoutData={layoutData}>
         <BookShelfComponent bookShelfData={bookShelfData}/>
         <InformationComponent userData={userData}/>
       </MainLayoutComponent>

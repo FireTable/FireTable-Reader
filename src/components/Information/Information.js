@@ -4,6 +4,10 @@ import { Popup,List, Button, InputItem,WingBlank,WhiteSpace,Flex,Toast} from 'an
 import { createForm } from 'rc-form';
 import uploadIcon from './UploadIcon';
 
+const config = require('../../config.json');
+const LENGTH_USERNAME = config.length.username;
+const LENGTH_PASSWORD = config.length.password;
+
 let username = '';
 let password = '';
 let nickname = '';
@@ -94,18 +98,18 @@ class InputForm extends React.Component {
   }
   //验证用户名
   validateUsername = (rule, value, callback) => {
-    if (value && value.length >= LENGTH) {
+    if (value && value.length >= LENGTH_USERNAME) {
       callback();
     } else {
-      callback(new Error(`账号至少${LENGTH}个字符`));
+      callback(new Error(`账号至少${LENGTH_USERNAME}个字符`));
     }
   }
   //验证密码
   validatePassword = (rule, value, callback) => {
-    if (value && value.length >= LENGTH) {
+    if (value && value.length >= LENGTH_PASSWORD) {
       callback();
     } else {
-      callback(new Error(`密码至少${LENGTH}个字符`));
+      callback(new Error(`密码至少${LENGTH_PASSWORD}个字符`));
     }
   }
   render() {
@@ -202,20 +206,16 @@ function Information({userData}) {
     if(userData.id!=null){
     return (
       <div>
+        <div style={{background:'#108ee9'}}>
         <UserComponent/>
-        <WhiteSpace size='lg'/>
-        {/* <Button size='small'  onClick={() =>{} }>修改密码</Button> */}
-        <WhiteSpace size='lg'/>
-        <WhiteSpace size='lg'/>
+        </div>
         <Button  size='small' type="warning" onClick={() => outLogin()}>退出登录</Button>
       </div>
     );
   }else{
     return (
       <div>
-        <WhiteSpace size='lg'/>
-        <WhiteSpace size='lg'/>
-        <WhiteSpace size='lg'/>
+
         <Login_RegisterComponent/>
       </div>
     );
@@ -224,8 +224,6 @@ function Information({userData}) {
 
   return (
     <div className={styles.normal}>
-      <WhiteSpace size='lg'/>
-      <WhiteSpace size='lg'/>
       <ContentComponent/>
       <WhiteSpace size='lg'/>
     </div>

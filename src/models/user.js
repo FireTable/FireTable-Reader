@@ -7,7 +7,7 @@ const TIME = 1.2;
 export default {
   namespace: 'user',
   state: {
-    id:1,
+    id:null,
     username:null,
     nickname:null,
     icon:null,
@@ -66,8 +66,16 @@ export default {
       newData = {...newData,'nickname':newData.username}
       const {data} = yield call(() => create(newData));
       if (data.state =='success') {
+        //注册成功
         yield put({
           type: 'createSuccess',
+          payload: {
+            ...data
+          }
+        });
+        //添加阅读器配置
+        yield put({
+          type: 'bookReader/create',
           payload: {
             ...data
           }

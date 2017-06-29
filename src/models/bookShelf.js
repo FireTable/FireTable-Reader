@@ -1,4 +1,4 @@
-import { create,query,_delete,update} from '../services/bookShelf';
+import {create,query,_delete,update} from '../services/bookShelf';
 import {Toast} from 'antd-mobile';
 
 const TIME = 1.2;
@@ -167,10 +167,16 @@ export default {
      history.listen(({ pathname }) => {
        if (pathname === '/') {
          console.log('查询书架');
+         //查询暑假
          dispatch({
            type: 'bookShelf/query',
            payload:{}
         });
+        //清空阅读器
+        dispatch({
+          type: 'bookReader/resetReader',
+          payload:{}
+       });
        }
      });
    },

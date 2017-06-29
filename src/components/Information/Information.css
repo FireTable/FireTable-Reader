@@ -2,12 +2,12 @@
 .normal {
 }
 
- .icon{
-   width:2.5rem;
-   height:2.5rem;
-   border-radius:2.5rem;
- }
+.icon{
+  width:2.5rem;
+  height:2.5rem;
+  border-radius:2.5rem;
+}
 
- .btnStyle{
-   width: 90%;
- }
+.btnStyle{
+  width: 90%;
+}
