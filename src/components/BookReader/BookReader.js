@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './BookReader.css';
-import {Pagination,Popup,List,Button,WhiteSpace,WingBlank,Toast,Icon,Drawer} from 'antd-mobile';
+import {Pagination,Popup,List,Button,WhiteSpace,WingBlank,Toast,Icon,Drawer,ActivityIndicator} from 'antd-mobile';
 import {routerRedux} from 'dva/router';
 import touch from 'touchjs';
 import _ from 'lodash';
@@ -40,6 +40,7 @@ class BookReader extends React.Component{
       dispatch:bookReaderData.dispatch,
       open: false,
       position: 'left',
+      loading:false,
     };
     console.log(this.state);
   }
@@ -134,9 +135,9 @@ class BookReader extends React.Component{
 
   //转换转义字符
   repalceText(){
-    let text = '&nbsp;&nbsp;' + this.props.bookReaderData.text;
+    let text = '' + this.props.bookReaderData.text;
     //替换字符串,将/n换成换行,以及添加段落头
-    let newText = _.replace(text, new RegExp('\n',"gm"), '<br/>&nbsp;&nbsp;');
+    let newText = _.replace(text, new RegExp('\n',"gm"), '<br/>');
     return newText;
   }
 
@@ -170,9 +171,13 @@ class BookReader extends React.Component{
   }
 
   //组件更新,接收props后更新
-  componentWillReceiveProps(){
+  componentWillReceiveProps(nextProps){
     //页数
     this.getPages();
+    this.state = {
+      loading:nextProps.bookReaderData.loading,
+      dispatch:nextProps.bookReaderData.dispatch,
+    };
   }
 
   //更改样式
@@ -335,6 +340,7 @@ class BookReader extends React.Component{
       <div className={styles.normal}
         style={{background:`${this.props.bookReaderData.background}`}}
         ref='myReader'>
+          <ActivityIndicator toast text="正在加载" animating={this.state.loading} />
         <div className={styles.title}>
           <h2>{title}</h2>
         </div>
@@ -345,6 +351,7 @@ class BookReader extends React.Component{
         </div>
         <Pagination mode="number" total={this.state.pages} current={this.state.current} className={styles.pagination} />
         {DrawerComponent}
+
       </div>
     );
   }

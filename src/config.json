@@ -24,5 +24,15 @@
   },
   "author":{
     "icon":"http://opzvozftr.bkt.clouddn.com/FlKS6XW-mRZiHtwBo3lcOVQlVrdW"
-  }
+  },
+  "logo":{
+    "1":"http://opzvozftr.bkt.clouddn.com/logo%281%29.png",
+    "2":"http://opzvozftr.bkt.clouddn.com/logo%282%29.png",
+    "3":"http://opzvozftr.bkt.clouddn.com/logo%283%29.png",
+    "4":"http://opzvozftr.bkt.clouddn.com/logo%284%29.png",
+    "5":"http://opzvozftr.bkt.clouddn.com/logo%285%29.png",
+    "6":"http://opzvozftr.bkt.clouddn.com/logo%286%29.png",
+    "7":"http://opzvozftr.bkt.clouddn.com/logo%287%29.png"
+  },
+  "title":"../../assets/logo/title.png"
 }

@@ -1,22 +1,42 @@
 import { create,query,update} from '../services/user';
-import {Toast} from 'antd-mobile';
+import { Toast } from 'antd-mobile';
 import { routerRedux } from 'dva/router';
 
-const TIME = 1.2;
+//本地存储
+const store = require('storejs');
+
+const TIME = 1.3;
 
 export default {
   namespace: 'user',
   state: {
-    id:1,
+    id:null,
     username:null,
     nickname:null,
     icon:null,
     password:null,
   },
   reducers: {
+    //保存信息到本地缓存
+    saveStore(state,{payload:newData}){
+      store(state);
+      console.log('saveStore');
+      return{
+        ...state
+      };
+    },
+    //读取本地缓存
+    readStore(state,{payload:newData}){
+      const readStoreData = store();
+      return{
+        ...readStoreData
+      };
+    },
     //退出登录
     outLogin(state,{payload:newData}){
       Toast.info('退出登录中...', TIME);
+      //清空本地存储
+      store.clear();
       return{
         id:null,
         username:null,
@@ -97,6 +117,13 @@ export default {
             ...data
           }
         });
+        //存储到本地
+        yield put({
+          type: 'saveStore',
+          payload: {
+            ...data
+          }
+        });
       }else{
         yield put({
           type: 'queryFail',
@@ -125,6 +152,33 @@ export default {
         });
       }
     },
+    //验证登录
+    *isLogin({ payload : newData },{ select ,call, put}){
+      const userData = yield select(state => state.user);
+      if (userData.id == null) {
+        Toast.info('登录才能使用哦!', TIME);
+        newData.dispatch(routerRedux.push('/'));
+      }
+    },
   },
-  subscriptions: {},
+  subscriptions: {
+    setup({ dispatch, history }) {
+     history.listen(({ pathname }) => {
+       //读取本地数据
+       dispatch({
+         type: 'user/readStore',
+         payload:{}
+      });
+      if (pathname !== '/') {
+      //验证是否登录
+        dispatch({
+          type: 'user/isLogin',
+          payload:{
+            dispatch:dispatch
+          }
+       });
+      }
+     });
+   },
+  },
 };

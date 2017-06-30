@@ -6,12 +6,26 @@
   width:2.5rem;
   height:2.5rem;
   border-radius:2.5rem;
+  border: 5px solid #ffffff;
 }
 
+.logo{
+  width:2.5rem;
+  height:2.5rem;
+  border-radius:2.5rem;
+  border: 5px solid #ffffff;
+}
+
+.title{
+  width:1rem;
+  height:0.6rem;
+}
+
+
 .my_icon{
-  width:1.5rem;
-  height:1.5rem;
-  border-radius:1.5rem;
+  width:1.2rem;
+  height:1.2rem;
+  border-radius:1.2rem;
 }
 
 .btnStyle{

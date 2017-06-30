@@ -19,6 +19,14 @@ class MainLayout extends React.Component {
     };
   }
 
+  componentDidMount(){
+    //自动查询书架
+    this.state.dispatch({
+      type: 'bookShelf/query',
+      payload:{}
+   });
+  }
+
   //决定展示的内容
   decideContent(){
     //内容展示初始化

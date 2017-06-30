@@ -4,8 +4,8 @@ import styles from './BookReader.css';
 import BookReaderComponent from '../components/BookReader/BookReader';
 
 
-function BookReader({bookReaderData,dispatch,loading}) {
-  bookReaderData = {...bookReaderData,dispatch,loading};
+function BookReader({bookReaderData,dispatch}) {
+  bookReaderData = {...bookReaderData,dispatch};
   return (
     <div className={styles.normal}>
       <BookReaderComponent bookReaderData={bookReaderData}/>
@@ -16,8 +16,7 @@ function BookReader({bookReaderData,dispatch,loading}) {
 function mapStateToProps(state) {
   const bookReaderData=state.bookReader;
   return {
-    bookReaderData:bookReaderData,
-    loading: state.loading.models.bookReader,
+    bookReaderData:bookReaderData
   };
 }
 

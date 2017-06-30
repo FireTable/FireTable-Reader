@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './BookSearch.css';
-import {Card,Button,List,WhiteSpace,SwipeAction,NoticeBar} from 'antd-mobile';
+import {Card,Button,List,WhiteSpace,SwipeAction,NoticeBar,ActivityIndicator} from 'antd-mobile';
 import { routerRedux} from 'dva/router';
 
 const Item = List.Item;
@@ -8,6 +8,7 @@ const Brief = Item.Brief;
 let books = null;
 let ItemList = '';
 let details = null;
+let loading = false;
 
 function BookSearch({bookSearchData}) {
   console.log('bookSearchData');
@@ -15,6 +16,10 @@ function BookSearch({bookSearchData}) {
 
   //获取model中的数据
   details = bookSearchData.details;
+  loading = bookSearchData.loading;
+  if(loading == undefined){
+  loading = false;
+}
 
   //查询书籍id
   function queryId(id){
@@ -92,7 +97,7 @@ function BookSearch({bookSearchData}) {
               thumb={book.cover}
               arrow="horizontal"
               key={book._id}
-              wrap
+              //wrap
               onClick={ () =>
               console.log('onClick')
             }
@@ -126,6 +131,7 @@ function BookSearch({bookSearchData}) {
 
   return (
     <div className={styles.normal}>
+      <ActivityIndicator toast text="正在加载" animating={loading} />
       <div>
       <List renderHeader='- 搜索结果 -'
        id='list1' key='1'>

@@ -177,16 +177,16 @@ export default {
      history.listen(({ pathname }) => {
        if (pathname === '/') {
          console.log('查询书架');
-         //查询暑假
-         dispatch({
-           type: 'bookShelf/query',
-           payload:{}
-        });
         //清空阅读器
         dispatch({
           type: 'bookReader/resetReader',
           payload:{}
        });
+       //清空搜索
+       dispatch({
+         type: 'bookSearch/resetSearch',
+         payload:{}
+      });
        }
      });
    },

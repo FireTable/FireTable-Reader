@@ -8,6 +8,10 @@ const config = require('../../config.json');
 const LENGTH_USERNAME = config.length.username;
 const LENGTH_PASSWORD = config.length.password;
 const author_icon = config.author.icon;
+const logoList = config.logo;
+const reader_title = require('../../assets/logo/title.png');
+let logo = logoList[Math.floor(Math.random()*7+1)];
+
 
 let username = '';
 let password = '';
@@ -117,6 +121,15 @@ class InputForm extends React.Component {
     const { getFieldProps, getFieldError } = this.props.form;
     return (
       <div>
+        <div>
+        <WhiteSpace size='lg'/>
+        <WhiteSpace size='lg'/>
+        <WhiteSpace size='sm'/>
+        <img className={styles.logo} src={logo}/>
+        <WhiteSpace size='sm'/>
+        <img className={styles.title} src={reader_title}/>
+        <WhiteSpace size='lg'/>
+        </div>
       <form>
       <List  renderFooter={() =>
          getFieldError('username') && getFieldError('username').join(',')
@@ -217,16 +230,21 @@ function Information({userData}) {
         <WhiteSpace size='lg'/>
         </div>
         <WhiteSpace size='lg'/>
-        <WhiteSpace size='lg'/>
-            <img className={styles.my_icon} src={author_icon}/>
-            <p><h3>FireTable</h3></p>
-            <a href="http://村村.top/">个人博客地址</a><br/>
+        <WhiteSpace size='sm'/>
+            {/* <img className={styles.my_icon} src={author_icon}/> */}
+            <h3 style={{color:'#ff0000'}}>使用须知</h3>
+            <pre>
+              <h4 style={{color:'#ff0000'}}>*本应用仅学习、交流使用，请勿用作商业用途。</h4>
+            </pre>
+            <pre>
+              作者博客地址：
+            <a href="http://村村.top//">戳我访问</a>
+            </pre>
             <pre>
               项目开源地址：
-            <a href="https://github.com/FireTable/FireTable-Reader/">FireTable-Reader
-            </a>
+            <a href="https://github.com/FireTable/FireTable-Reader/">戳我访问</a>
             </pre>
-        <WhiteSpace size='lg'/>
+
         <WhiteSpace size='lg'/>
         <Button type="warning" onClick={() => outLogin()}>退出登录</Button>
       </div>

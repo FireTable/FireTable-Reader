@@ -9,7 +9,7 @@ export default {
     id:null,
     fontSize:30,
     background:'#f5f5f9',
-    loading:null,
+    loading:false,
     text:'',
     title:'',
     chapters:null,
@@ -17,13 +17,27 @@ export default {
     bookSource_id:0,
   },
   reducers: {
+    //展示loading控件
+    showLoading(state,{payload:newData}){
+      return{
+        ...state,
+        loading:true,
+      };
+    },
+    //隐藏loading控件
+    hideLoading(state,{payload:newData}){
+      return{
+        ...state,
+        loading:false,
+      };
+    },
     //清空阅读器
     resetReader(state,{payload:newData}){
       return{
         id:null,
         fontSize:30,
         background:'#f5f5f9',
-        loading:null,
+        loading:false,
         text:'',
         title:'',
         chapters:null,
@@ -38,6 +52,7 @@ export default {
       return{
         ...state,
         ...newData,
+
       };
     },
     //查询失败
@@ -91,7 +106,7 @@ export default {
       console.log(newData);
       return{
         ...state,
-        bookSource:newData
+        bookSource:newData,
       };
     },
     //查询书源失败
@@ -217,6 +232,11 @@ export default {
     //找书源
     *queryBookSource({ payload : oldData },{ select ,call, put}){
       console.log('找书源');
+      //设置loading控件
+      yield put({
+        type: 'showLoading',
+        payload: {}
+      });
       const user_id = yield select(state=>state.user.id);
       const book_id = yield select(state=>state.bookShelf.book.book_id);
       const newData = {book_id:book_id};
@@ -280,6 +300,11 @@ export default {
     },
     //查询正文
     *queryBody({ payload : oldData },{ select ,call, put}){
+      //设置loading控件
+      yield put({
+        type: 'showLoading',
+        payload: {}
+      });
       let book_page = yield select(state=>state.bookShelf.book.book_page);
       const chapters = yield select(state=>state.bookReader.chapters);
       //页码空,设为0
@@ -305,6 +330,7 @@ export default {
           type: 'resetBookSource',
           payload: {}
         });
+        //
         yield put({
           type: 'queryChapter',
           payload: {}
@@ -328,6 +354,11 @@ export default {
           payload: {}
         });
       }
+      //设置loading控件
+      yield put({
+        type: 'hideLoading',
+        payload: {}
+      });
     },
     //下一页
     *nextPage({ payload : oldData },{ select ,call, put}){

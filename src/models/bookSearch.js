@@ -3,12 +3,23 @@ import {queryKeyword,queryId} from '../services/bookSearch';
 export default {
   namespace: 'bookSearch',
   state: {
+    keyword:null,
     //data为搜索书籍的数组
     books:null,
-    loading:null,
+    loading:false,
     details:null,
   },
   reducers: {
+    //清空details的数值
+    resetSearch(state,{payload:newData}){
+      console.log('清空搜索');
+      return{
+        keyword:null,
+        books:null,
+        loading:false,
+        details:null,
+      };
+    },
     //清空details的数值
     removeDetails(state,{payload:newData}){
       return{
@@ -79,5 +90,6 @@ export default {
       }
     },
   },
-  subscriptions: {},
+  subscriptions: {
+  },
 };
