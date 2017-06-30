@@ -329,7 +329,6 @@ export default {
         });
       }
     },
-
     //下一页
     *nextPage({ payload : oldData },{ select ,call, put}){
       let book_page = yield select(state=>state.bookShelf.book.book_page);
@@ -395,6 +394,29 @@ export default {
       }else{
         Toast.info('没有上一章啦...', TIME);
       }
+    },
+    //跳转页
+    *choosePage({ payload : newData },{ select ,call, put}){
+      Toast.info('章节跳转中...', TIME);
+      console.log('章节跳转中...');
+      console.log(newData);
+        yield put({
+          type: 'bookShelf/choosePage',
+          payload:{
+            ...newData
+          }
+        });
+        //查询正文
+        yield put({
+          type: 'queryBody',
+          payload:{}
+        });
+        //保存页码
+        yield put({
+          type: 'bookShelf/update',
+          payload:{}
+        });
+
     },
   },
   subscriptions: {

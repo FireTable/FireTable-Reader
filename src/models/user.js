@@ -7,7 +7,7 @@ const TIME = 1.2;
 export default {
   namespace: 'user',
   state: {
-    id:null,
+    id:1,
     username:null,
     nickname:null,
     icon:null,

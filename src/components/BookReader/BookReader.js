@@ -1,12 +1,13 @@
 import React from 'react';
 import styles from './BookReader.css';
-import {Pagination,Popup,List,Button,WhiteSpace,WingBlank,Toast,Icon} from 'antd-mobile';
+import {Pagination,Popup,List,Button,WhiteSpace,WingBlank,Toast,Icon,Drawer} from 'antd-mobile';
 import {routerRedux} from 'dva/router';
 import touch from 'touchjs';
 import _ from 'lodash';
 
 const config = require('../../config.json');
 let colorList = config.color;
+const LENGTH_CHAPTER = config.length.chapter;
 
 console.log('color');
 console.log(colorList);
@@ -20,6 +21,7 @@ const Item = List.Item;
 
 //popup的设置
 const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
+
 let maskProps;
 if (isIPhone) {
   // Note: the popup content will not scroll.
@@ -36,6 +38,8 @@ class BookReader extends React.Component{
     const bookReaderData = props.bookReaderData;
     this.state = {
       dispatch:bookReaderData.dispatch,
+      open: false,
+      position: 'left',
     };
     console.log(this.state);
   }
@@ -85,6 +89,18 @@ class BookReader extends React.Component{
    });
   }
 
+  //跳转选定章
+  choosePage(page){
+    window.scrollTo(0,0);
+    console.log('choosePage');
+    this.state.dispatch({
+      type: 'bookReader/choosePage',
+      payload:{
+        book_page:page
+      }
+   });
+  }
+
   //手势事件
   touchEvent(myReaderDOM){
     //按住
@@ -110,7 +126,6 @@ class BookReader extends React.Component{
     const myReaderDOM = this.refs.myReader;
     let pages = Math.ceil(parseInt(myReaderDOM.scrollHeight)/parseInt(window.innerHeight));
     console.log(myReaderDOM.scrollHeight);
-    console.log();
     this.setState({
       current : 0,
       pages : pages,
@@ -203,15 +218,17 @@ class BookReader extends React.Component{
           </span>
         );
       });
-
     Popup.show(
       <div>
       <List renderHeader={() => (
         <div style={{ position: 'relative' }}>
-          更改样式
+          控制面板
           <span style={{position: 'absolute', right: 3, top: -4.5}}
-            onClick={() => Popup.hide()}>
-            <Icon type={require('!svg-sprite!../../assets/icon/cannel.svg')}
+            onClick={() => {
+              this.onOpenChange();
+              Popup.hide();
+            }}>
+            <Icon type={require('!svg-sprite!../../assets/icon/ellipsis.svg')}
                   style={{position: 'absolute', right: 1}}
             />
           </span>
@@ -247,11 +264,70 @@ class BookReader extends React.Component{
     </div>, { animationType: 'slide-up',maskProps, maskClosable: true });
   }
 
+  //弹出层关闭
   onClose = () => {
     Popup.hide();
   };
 
+  //打开or关闭抽屉的函数
+  onOpenChange = () => {
+    this.setState({ open: !this.state.open });
+  }
+
+  //获取抽屉内容
+  drawerContent(){
+    const chapterList = this.props.bookReaderData.chapters;
+    let sidebar = '暂无数据';
+    if(chapterList!=null){
+    const sidebarContent = chapterList.map((chapter, index) => {
+      return (
+        <Item key={index} onClick={()=>{
+          this.onOpenChange();
+          setTimeout('',500);
+          this.choosePage(`${index}`);
+        }}
+        >{chapter.title.substr(0,LENGTH_CHAPTER)}</Item>
+      );
+    });
+      sidebar =(
+      <div>
+        <List>
+          <Item>章节列表</Item>
+          {sidebarContent}
+        </List>
+      </div>
+    );
+  }
+
+     const drawerProps = {
+       open: this.state.open,
+       position: this.state.position,
+       onOpenChange:this.onOpenChange,
+     };
+     return (
+       <div>
+        <Drawer
+          style={{
+            minHeight: window.innerHeight-200,
+            maxHeight: window.innerHeight,
+            bottom:0,
+            position:'fixed',
+            overflow:'auto',
+           }}
+          dragHandleStyle={{ display: 'none' }}
+          contentStyle={{ color: '#A6A6A6', textAlign: 'center', paddingTop: 42 }}
+          sidebar={sidebar}
+          {...drawerProps}
+        >
+        </Drawer>
+      </div>);
+    }
+
+
   render(){
+    //抽屉中的内容,引用函数
+    const DrawerComponent = this.drawerContent();
+    //正文部分处理
     let title = this.props.bookReaderData.title;
     let newText = this.repalceText();
     console.log(this.props);
@@ -268,6 +344,7 @@ class BookReader extends React.Component{
           dangerouslySetInnerHTML={{__html: newText}}>
         </div>
         <Pagination mode="number" total={this.state.pages} current={this.state.current} className={styles.pagination} />
+        {DrawerComponent}
       </div>
     );
   }

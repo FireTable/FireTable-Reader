@@ -7,6 +7,7 @@ import uploadIcon from './UploadIcon';
 const config = require('../../config.json');
 const LENGTH_USERNAME = config.length.username;
 const LENGTH_PASSWORD = config.length.password;
+const author_icon = config.author.icon;
 
 let username = '';
 let password = '';
@@ -176,8 +177,10 @@ const UserComponent = () => {
   };
   return (
     <div>
+        <WhiteSpace size='sm'/>
         <img className={styles.icon} src={icon}  onClick={()=>uploadIcon(dispatch)} />
-        <div onClick={(e)=>onClick(e,'昵称')}>{nickname}</div>
+        <WhiteSpace size='sm'/>
+        <div onClick={(e)=>onClick(e,'昵称')} style={{fontSize:'0.45rem'}}>{nickname}</div>
     </div>
   );
 };
@@ -207,15 +210,30 @@ function Information({userData}) {
     return (
       <div>
         <div style={{background:'#108ee9'}}>
+        <WhiteSpace size='lg'/>
+        <WhiteSpace size='lg'/>
         <UserComponent/>
+        <WhiteSpace size='lg'/>
+        <WhiteSpace size='lg'/>
         </div>
-        <Button  size='small' type="warning" onClick={() => outLogin()}>退出登录</Button>
+        <WhiteSpace size='lg'/>
+        <WhiteSpace size='lg'/>
+            <img className={styles.my_icon} src={author_icon}/>
+            <p><h3>FireTable</h3></p>
+            <a href="http://村村.top/">个人博客地址</a><br/>
+            <pre>
+              项目开源地址：
+            <a href="https://github.com/FireTable/FireTable-Reader/">FireTable-Reader
+            </a>
+            </pre>
+        <WhiteSpace size='lg'/>
+        <WhiteSpace size='lg'/>
+        <Button type="warning" onClick={() => outLogin()}>退出登录</Button>
       </div>
     );
   }else{
     return (
       <div>
-
         <Login_RegisterComponent/>
       </div>
     );
@@ -225,7 +243,6 @@ function Information({userData}) {
   return (
     <div className={styles.normal}>
       <ContentComponent/>
-      <WhiteSpace size='lg'/>
     </div>
   );
 }

@@ -10,6 +10,16 @@ export default {
     book:null
   },
   reducers: {
+    //跳转页
+    choosePage(state,{payload:newData}){
+      console.log('choosePage_bookShelf');
+      console.log(newData);
+      state = {...state,book:{...state.book,...newData}};
+      console.log(state);
+      return{
+        ...state
+      };
+    },
     //上一页
     prePage(state,{payload:newData}){
       console.log('nextPage_model');

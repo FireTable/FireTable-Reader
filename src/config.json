@@ -19,6 +19,10 @@
   },
   "length":{
     "username":2,
-    "password":2
+    "password":2,
+    "chapter":12
+  },
+  "author":{
+    "icon":"http://opzvozftr.bkt.clouddn.com/FlKS6XW-mRZiHtwBo3lcOVQlVrdW"
   }
 }
