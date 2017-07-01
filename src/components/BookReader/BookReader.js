@@ -107,10 +107,16 @@ class BookReader extends React.Component{
     //按住
     touch.on(myReaderDOM,'hold',()=>this.openFunctionBar());
     //滑动
-    touch.on(myReaderDOM,'swipestart',()=>console.log('swipestart'));
-    touch.on(myReaderDOM,'swipeend',(ev)=>{
-      console.log(ev.direction);
-      switch (ev.direction) {
+    touch.on(myReaderDOM,'doubletap',(ev)=>{
+      console.log(ev);
+      let direction = null;
+      const x = ev.detail.position.x;
+      if(x < window.innerWidth/2){
+        direction = 'left';
+      }else{
+        direction = 'right';
+      }
+      switch (direction) {
         case 'left' :
           this.prePage();
           break;
@@ -319,6 +325,7 @@ class BookReader extends React.Component{
             position:'fixed',
             overflow:'auto',
            }}
+          touch
           dragHandleStyle={{ display: 'none' }}
           contentStyle={{ color: '#A6A6A6', textAlign: 'center', paddingTop: 42 }}
           sidebar={sidebar}

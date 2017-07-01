@@ -1,14 +1,16 @@
 {
   "url": {
-    "user":"http://localhost/FireTable_Reader_php/user",
-    "token":"http://localhost/FireTable_Reader_php/token",
-    "bookShelf":"http://localhost/FireTable_Reader_php/bookShelf",
-    "bookReader":"http://localhost/FireTable_Reader_php/bookReader",
+    "user":"http://xn--brva.top/api/user",
+    "token":"http://xn--brva.top/api/token",
+    "bookShelf":"http://xn--brva.top/api/bookShelf",
+    "bookReader":"http://xn--brva.top/api/bookReader",
     "queryKeyword":"http://35.189.165.140:3000/book/fuzzy-search?query",
     "queryId":"http://35.189.165.140:3000/book",
     "queryChapter":"http://35.189.165.140:3000/atoc",
     "queryBody":"http://35.189.165.140:3000/getChapter?chapterUrl",
-    "bookSource":"http://35.189.165.140:3000/toc?view=summary&book"
+    "bookSource":"http://35.189.165.140:3000/toc?view=summary&book",
+    "backup1":"http://xn--brva.top/api",
+    "backup2":"http://localhost/slim-eloquent-master/public/index.php"
   },
   "color":{
     "1":"#F1E5C9",
@@ -18,8 +20,8 @@
     "5":"#FDE6E0"
   },
   "length":{
-    "username":2,
-    "password":2,
+    "username":6,
+    "password":6,
     "chapter":12
   },
   "author":{
