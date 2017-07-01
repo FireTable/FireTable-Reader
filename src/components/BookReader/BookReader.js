@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './BookReader.css';
-import {Pagination,Popup,List,Button,WhiteSpace,WingBlank,Toast,Icon,Drawer,ActivityIndicator} from 'antd-mobile';
+import {Pagination,Popup,List,Accordion,Button,WhiteSpace,WingBlank,Toast,Icon,Drawer,ActivityIndicator} from 'antd-mobile';
 import {routerRedux} from 'dva/router';
 import touch from 'touchjs';
 import _ from 'lodash';
@@ -290,6 +290,7 @@ class BookReader extends React.Component{
     const chapterList = this.props.bookReaderData.chapters;
     let sidebar = '暂无数据';
     if(chapterList!=null){
+    const maxLength = chapterList.length;
     const sidebarContent = chapterList.map((chapter, index) => {
       return (
         <Item key={index} onClick={()=>{
